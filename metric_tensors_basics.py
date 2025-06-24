@@ -7,6 +7,7 @@ mechanics on vectors that forms the unit-ellipse
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def metric_ellipse(g, num_points=200):
     angles = np.linspace(0, 2 * np.pi, num_points)
     points = []
