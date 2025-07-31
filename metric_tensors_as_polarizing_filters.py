@@ -6,9 +6,9 @@ import numpy as np
 
 def form_metric_theta_tensor(theta: int) -> Operator:
     '''
-    This function generates metric-like tensor for polarization filte, based on given polarization angle.
+    This function generates metric-like tensor for polarization filter  , based on given polarization angle.
     '''
-    
+        
     theta = theta * np.pi / 180 # Convert angle to radians, since NumPy's sin and cos works with radians
 
     return Operator(
@@ -26,11 +26,18 @@ beta  = 1 / np.sqrt(2)
 
 # Create state vector for quant
 psi = Statevector([alpha, beta])
+psi_vector = np.array([alpha, beta])
 print("Initial state |ψ⟩:", psi)
 
 # Create polarizator tensor and dot it with Psi
-result = form_metric_theta_tensor(90) @ psi
+theta_tensor = form_metric_theta_tensor(90)
+result = theta_tensor @ psi
 print("\nProjected state (after measurement tensor):\n", result)
+
+# Double tensor contraction method
+double_contraction = np.vdot(psi_vector, theta_tensor @ psi_vector).real
+
+print(f"\nDouble tensor contraction method output:\n{double_contraction}")
 
 # Calculate probability of the projections
 probability = np.abs(result.data) ** 2
